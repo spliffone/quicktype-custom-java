@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/spliffone/quicktype-custom-java/schemas/TestSchemaUpdated.json",
+  "description": "Status update indications",
+  "allOf": [
+    {
+      "$ref": "https://github.com/spliffone/quicktype-custom-java/schemas/event-spec-v1.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "enum": [
+            "namespace:A.Group.Updated"
+          ],
+          "examples": ["namespace:A.Group.Updated"]
+        },
+        "data": {
+          "title": "UpdateList",
+          "type": "object",
+          "properties": {
+            "updates": {
+              "description": "The list of updates.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/update"
+              }
+            }
+          },
+          "required": ["updates"]
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "action": {
+      "type": "string",
+      "description": "Supported action",
+      "minLength": 1,
+      "maxLength": 250
+    },
+    "update": {
+      "description": "Update indication",
+      "title": "Update",
+      "type": "object",
+      "required": ["eventId", "eventType", "message", "producedBy", "state", "uniqueTimestamp", "source", "nextPossibleActions"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "description": "Classification of the alarm kind according to the category meta data.\n\nFixed to `Security` for access systems.",
+          "maxLength": 250,
+          "examples": ["Security"]
+        },
+        "location": {
+          "deprecated": true,
+          "type": "string",
+          "description": "A textual description of the location.",
+          "maxLength": 250,
+          "examples": ["Next door"]
+        },
+        "message": {
+          "description": "A user readable message associated with the update.",
+          "type": "string",
+          "maxLength": 500,
+          "examples": ["Door forced"]
+        },
+        "producedBy": {
+          "title": "ProducedBy",
+          "type": "object",
+          "description": "The producer of an update.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "id of the reference.",
+              "maxLength": 250,
+              "examples": ["41b606b9-821f-475e-b8ec-d832b083b3df"]
+            },
+            "type": {
+              "type": "string",
+              "description": "type of reference",
+              "maxLength": 250,
+              "examples": ["Sensor", "System"]
+            }
+          },
+          "required": ["id", "type"]
+        },
+        "uniqueTimestamp": {
+          "type": "integer",
+          "description": "A unique timestamp.",
+          "examples": [1565544858]
+        },
+        "raisedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time when the update was created."
+        },
+        "source": {
+          "title": "Source",
+          "type": "object",
+          "description": "The update source.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "A global unique update source id.",
+              "maxLength": 250,
+              "examples": ["f2554bc6-a843-4aad-87e4-add6fa998f68"]
+            },
+            "type": {
+              "type": "string",
+              "description": "Source type.",
+              "maxLength": 250,
+              "examples": ["Button"]
+            },
+            "name": {
+              "type": "string",
+              "description": "Source name.",
+              "maxLength": 250,
+              "examples": ["Martin 1"]
+            }
+          },
+          "required": ["id", "type", "name"]
+        },
+        "nextPossibleActions": {
+          "description": "The list of possible actions.",
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "$ref": "#/definitions/action"
+          },
+          "examples": [
+            [
+              "acknowledge"
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

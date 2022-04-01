@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/spliffone/quicktype-custom-java/schemas/TestSchemaAction.json",
+  "description": "Indicate an action",
+  "title": "TestSchemaAction",
+  "type": "object",
+  "properties": {
+    "type": {
+      "enum": [
+        "namespace:A.Group.Action"
+      ],
+      "examples": ["namespace:A.Group.Action"]
+    },
+    "data": {
+      "title": "ActionEvent",
+      "type": "object",
+      "properties": {
+        "producedBy": {
+          "$ref": "#/definitions/producedBy"
+        },
+        "eventId": {
+          "$ref": "#/definitions/eventId"
+        },
+        "action": {
+          "$ref": "#/definitions/action"
+        }
+      },
+      "required": ["producedBy", "eventId", "action"]
+    }
+  },
+  "definitions": {
+    "producedBy": {
+      "type": "object",
+      "description": "The action producer.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id of the reference, which must be unique within the system",
+          "maxLength": 250,
+          "examples": ["120"]
+        },
+        "type": {
+          "type": "string",
+          "description": "type of reference",
+          "examples": ["Sensor", "System"],
+          "maxLength": 250
+        }
+      },
+      "required": ["id", "type"]
+    },
+    "eventId": {
+      "description": "An unique event identifier",
+      "type": "string",
+      "maxLength": 250,
+      "examples": ["45388b10-b874-4fe2-91e6-276e353afbd9"]
+    },
+    "action": {
+      "description": "The action to execute",
+      "type": "string",
+      "maxLength": 250,
+      "examples": ["acknowledge"]
+    }
+  }
+}
